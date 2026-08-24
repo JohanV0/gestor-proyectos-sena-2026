@@ -5,122 +5,206 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalle del Proyecto · Gestor</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-purple': {
+                            950: '#0b0614',
+                            900: '#140c24',
+                            800: '#23153c',
+                            700: '#3a2063',
+                            500: '#8b5cf6',
+                            300: '#c4b5fd',
+                            100: '#ede9fe',
+                        },
+                    },
+                    fontFamily: {
+                        'jp-serif': ['Noto Serif JP', 'serif'],
+                        'sans-refined': ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap');
         body {
-            background: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
         .detalle-card {
             transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
         .detalle-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
-        }
-        /* Para darle un toque más refinado a los campos */
-        .campo-label {
-            letter-spacing: 0.01em;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
         }
     </style>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
-<body class="min-h-screen flex items-center justify-center p-4 md:p-8 font-sans antialiased">
-
-    <div class="w-full max-w-2xl bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl p-6 md:p-10 border border-white/40">
-
-        <!-- Cabecera con navegación simple (estilo consistente) -->
-        <div class="flex items-center gap-3 mb-8 border-b border-slate-200/80 pb-5">
-            <div class="bg-indigo-100 p-3 rounded-xl text-indigo-600">
+<body class="min-h-screen flex items-center justify-center p-4 md:p-8 bg-dark-purple-950 text-dark-purple-100 antialiased">
+    <div class="w-full max-w-2xl bg-dark-purple-900 rounded-2xl shadow-2xl shadow-black/40 p-6 md:p-10 border border-dark-purple-800">
+        <!-- CABECERA -->
+        <div class="flex items-center gap-3 mb-8 border-b border-dark-purple-800 pb-5">
+            <div class="bg-dark-purple-800/60 p-3 rounded-xl text-dark-purple-500 border border-dark-purple-700">
                 <i class="fa-regular fa-folder-open text-2xl"></i>
             </div>
             <div class="flex-1">
-                <h1 class="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">
+                <span class="text-xs tracking-widest uppercase text-dark-purple-300 block mb-1">
+                    プロジェクト — Project Details
+                </span>
+                <h1 class="text-2xl md:text-3xl font-jp-serif font-light text-white tracking-wide">
                     Detalle del proyecto
                 </h1>
-                <p class="text-sm text-slate-500 font-light">
+                <p class="text-sm text-dark-purple-300 font-light">
                     Información completa del proyecto seleccionado
                 </p>
             </div>
-            <!-- Enlace para editar el proyecto -->
-            <a href="{% url 'editar_proyecto' proyecto.id %}" 
-               class="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-xl hover:bg-indigo-700 transition-all duration-150 shadow-sm hover:shadow">
-                <i class="fa-regular fa-pen-to-square"></i>
-                <span class="hidden sm:inline">Editar</span>
-            </a>
-            <!-- Enlace para volver a la lista (misma línea visual) -->
-            <a href="{% url 'proyectos' %}" 
-               class="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-100 text-slate-600 text-sm font-medium rounded-xl border border-slate-200/60 hover:bg-slate-200 hover:border-slate-300 transition-all duration-150 shadow-sm hover:shadow">
-                <i class="fa-regular fa-arrow-left"></i>
-                <span class="hidden sm:inline">Volver</span>
-            </a>
+            <!-- BOTONES -->
+            <div class="flex items-center gap-2">
+                <a href="{% url 'editar_proyecto' proyecto.id %}"
+                   class="inline-flex items-center gap-1.5 px-4 py-2 bg-dark-purple-500 hover:bg-purple-500 text-white text-sm font-medium rounded-xl transition-all shadow-sm">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span class="hidden sm:inline">
+                        Editar
+                    </span>
+                </a>
+                <a href="{% url 'proyectos' %}"
+                   class="inline-flex items-center gap-1.5 px-4 py-2 bg-dark-purple-950 text-dark-purple-300 text-sm font-medium rounded-xl border border-dark-purple-800 hover:bg-dark-purple-800 hover:text-white transition-all">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span class="hidden sm:inline">
+                        Volver
+                    </span>
+                </a>
+            </div>
         </div>
-
-        <!-- Tarjeta de detalle (con los campos requeridos) -->
-        <div class="detalle-card bg-white rounded-2xl p-6 md:p-8 border border-slate-100 shadow-sm">
-
-            <!-- Nombre del proyecto (destacado) -->
+        <!-- INFORMACIÓN DEL PROYECTO -->
+        <div class="detalle-card bg-dark-purple-950/60 rounded-2xl p-6 md:p-8 border border-dark-purple-800 shadow-sm">
+            <!-- NOMBRE -->
             <div class="flex items-start gap-3 mb-6">
-                <div class="bg-indigo-50 p-2.5 rounded-xl text-indigo-500 mt-0.5">
-                    <i class="fa-regular fa-tag"></i>
+                <div class="bg-dark-purple-800/60 p-2.5 rounded-xl text-dark-purple-500 border border-dark-purple-700 mt-0.5">
+                    <i class="fa-regular fa-floppy-disk"></i>
                 </div>
                 <div>
-                    <h2 class="text-xl md:text-2xl font-bold text-slate-800 break-words">
+                    <h2 class="text-xl md:text-2xl font-jp-serif font-medium text-white break-words">
                         {{ proyecto.nombre }}
                     </h2>
-                    <span class="inline-block mt-1.5 text-xs font-mono bg-indigo-50 text-indigo-600 px-3 py-0.5 rounded-full border border-indigo-100/70">
-                        <i class="fa-regular fa-hashtag mr-1"></i> ID: {{ proyecto.id }}
+                    <span class="inline-block mt-1.5 text-xs font-mono bg-dark-purple-800 text-dark-purple-300 px-3 py-0.5 rounded-full border border-dark-purple-700">
+                        <i class="fa-regular fa-hashtag mr-1"></i>
+                        ID: {{ proyecto.id }}
                     </span>
                 </div>
             </div>
-
-            <!-- Descripción (campo requerido) -->
-            <div class="flex items-start gap-3 mb-6 border-t border-slate-100 pt-5">
-                <div class="bg-slate-50 p-2.5 rounded-xl text-slate-400 mt-0.5">
-                    <i class="fa-regular fa-align-left"></i>
+            <!-- DESCRIPCIÓN -->
+            <div class="flex items-start gap-3 mb-6 border-t border-dark-purple-800 pt-5">
+                <div class="bg-dark-purple-900 p-2.5 rounded-xl text-dark-purple-300 mt-0.5 border border-dark-purple-800">
+                    <i class="fa-solid fa-circle-chevron-right"></i>
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider campo-label">
+                    <p class="text-xs font-semibold text-dark-purple-300 uppercase tracking-wider">
                         Descripción
                     </p>
-                    <p class="text-base text-slate-700 leading-relaxed mt-1 break-words">
+                    <p class="text-base text-dark-purple-100 leading-relaxed mt-1 break-words">
                         {{ proyecto.descripcion }}
                     </p>
                 </div>
             </div>
-
-            <!-- Duración (campo requerido) -->
-            <div class="flex items-start gap-3 border-t border-slate-100 pt-5">
-                <div class="bg-slate-50 p-2.5 rounded-xl text-slate-400 mt-0.5">
+            <!-- DURACIÓN -->
+            <div class="flex items-start gap-3 border-t border-dark-purple-800 pt-5">
+                <div class="bg-dark-purple-900 p-2.5 rounded-xl text-dark-purple-300 mt-0.5 border border-dark-purple-800">
                     <i class="fa-regular fa-clock"></i>
                 </div>
                 <div>
-                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider campo-label">
+                    <p class="text-xs font-semibold text-dark-purple-300 uppercase tracking-wider">
                         Duración estimada
                     </p>
-                    <p class="text-base text-slate-700 font-medium mt-1 flex items-center gap-2">
-                        <span class="bg-indigo-50/70 px-3 py-1 rounded-full text-indigo-700 border border-indigo-100/60">
+                    <p class="text-base text-dark-purple-100 font-medium mt-1 flex items-center gap-2">
+                        <span class="bg-dark-purple-800 px-3 py-1 rounded-full text-dark-purple-300 border border-dark-purple-700">
                             {{ proyecto.duracion }}
                         </span>
-                        <span class="text-xs text-slate-400 font-light">(tiempo estimado)</span>
+                        <span class="text-xs text-dark-purple-300/60 font-light">
+                            (tiempo estimado)
+                        </span>
                     </p>
                 </div>
             </div>
         </div>
-
-        <!-- Pie con información sutil -->
-        <div class="mt-6 text-xs text-slate-400/80 flex justify-between items-center">
+        <!-- TAREAS -->
+        <div class="mt-6 bg-dark-purple-900/60 rounded-2xl p-6 md:p-8 border border-dark-purple-800 shadow-sm">
+            <div class="flex items-center justify-between gap-4 mb-5">
+                <div class="flex-1">
+                    <h2 class="text-xl font-jp-serif font-medium text-white mt-1">
+                        Tareas del proyecto
+                    </h2>
+                    <ul class="mt-4 space-y-2">
+                        {% for tarea in proyecto.tareas.all %}
+                        <li class="bg-dark-purple-950/70 border border-dark-purple-800 rounded-lg px-4 py-3 text-sm text-dark-purple-300 flex items-center justify-between gap-3">
+                            <div>
+                                <p class="text-white font-medium">
+                                    {{ tarea.titulo }}
+                                </p>
+                                <p class="text-xs text-dark-purple-300 mt-1">
+                                    Prioridad:
+                                    <span class="text-dark-purple-500">
+                                        {{ tarea.get_prioridad_display }}
+                                    </span>
+                                    <span class="mx-1">
+                                        ·
+                                    </span>
+                                    Estado:
+                                    <span class="text-dark-purple-300">
+                                        {{ tarea.get_estado_display }}
+                                    </span>
+                                </p>
+                            </div>
+                            <!-- AVANZAR ESTADO -->
+                            {% if tarea.estado == 'COMPLETADA'%}
+                            <i class="fa-solid fa-circle-check"></i>
+                            {% else %}
+                                    <a href="{% url 'avanzar_estado_tarea' tarea.id %}"
+                                       class="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 bg-dark-purple-800 hover:bg-dark-purple-700 text-dark-purple-300 hover:text-white rounded-lg border border-dark-purple-700 transition-all"
+                                       title="Avanzar estado">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                    <span class="hidden sm:inline">
+                                        Avanzar
+                                    </span>
+                                {% endif %}
+                                    
+                            </a>
+                        </li>
+                        {% empty %}
+                        <li class="text-sm text-dark-purple-300/70 py-3">
+                            Este proyecto aún no tiene tareas.
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- NUEVA TAREA -->
+                <a href="{% url 'crear_tarea' proyecto.id %}"
+                   class="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 bg-dark-purple-500 text-white text-sm font-medium rounded-xl border border-dark-purple-500 hover:bg-purple-500 transition-colors shadow-sm">
+                    <i class="fa-solid fa-plus"></i>
+                    <span class="hidden sm:inline">
+                        Nueva tarea
+                    </span>
+                </a>
+            </div>
+        </div>
+        <!-- PIE -->
+        <div class="mt-6 text-xs text-dark-purple-300/60 flex justify-between items-center">
             <span class="flex items-center gap-1.5">
-                <i class="fa-regular fa-circle-check text-emerald-400"></i>
+                <i class="fa-regular fa-circle-check text-dark-purple-500"></i>
                 Vista detallada
             </span>
             <span class="flex items-center gap-1.5">
-                <i class="fa-regular fa-arrow-right"></i>
-                <a href="{% url 'proyectos' %}" class="hover:text-indigo-500 transition-colors">
+                <i class="fa-solid fa-arrow-left"></i>
+                <a href="{% url 'proyectos' %}"
+                   class="hover:text-dark-purple-500 transition-colors">
                     Ir a la lista
                 </a>
             </span>
         </div>
-
     </div>
-
 </body>
 </html>

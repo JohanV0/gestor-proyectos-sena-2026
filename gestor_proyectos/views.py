@@ -64,7 +64,19 @@ def crear_tarea(request, proyecto_id):
     proyecto = get_object_or_404(Proyecto, id=proyecto_id)
 
     if request.method == 'POST':
-        pass
+        titulo = request.POST.get('titulo').strip()
+        prioridad = request.POST.get('prioridad')
+        estado = request.POST.get('estado')
+
+        if titulo:
+            tarea = Tarea(
+                titulo=titulo,
+                prioridad=prioridad,
+                estado=estado,
+                proyecto=proyecto)
+            tarea.save()
+
+            return redirect('ver_proyecto', id=proyecto_id)
     
     datos = {
         'proyecto' : proyecto,
@@ -73,3 +85,15 @@ def crear_tarea(request, proyecto_id):
     }
 
     return render(request,'crear_tarea.html', datos)
+
+def avanzar_estado_tarea(request, id):
+    tarea = get_object_or_404(Tarea, id=id)
+
+    if tarea.estado == 'PEDIENTE':
+        tarea.estado = 'EN_PROGRESO'
+        tarea.save()
+    elif tarea.estado == 'EN_PROGRESO':
+        tarea.estado = 'COMPLETADA'
+        tarea.save()
+    
+    return redirect('ver_proyecto', id=tarea.proyecto.id)

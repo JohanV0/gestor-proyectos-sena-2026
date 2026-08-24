@@ -15,14 +15,14 @@ class Tarea(models.Model):
     '''
 
     PRIORIDAD_CHOICES = [
-        ('BAJA', 'baja'),
-        ('MEDIA','media'),
-        ('ALTA','alta'),
+        ('BAJA', 'Baja'),
+        ('MEDIA', 'Media'),
+        ('ALTA', 'Alta'),
     ]
     ESTADO_CHOICES = [
-        ('PENDIENTE','pendiente'),
-        ('EN_PROGRESO','en_progreso'),
-        ('COMPLETADA','completada'),
+        ('PENDIENTE', 'Pendiente'),
+        ('EN_PROGRESO', 'En progreso'),
+        ('COMPLETADA', 'Completada'),
     ]
     
     # relacion 1 a muchos: un proyecto tiene muchas tareas

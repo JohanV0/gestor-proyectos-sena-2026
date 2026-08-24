@@ -3,127 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>プロジェクト一覧 — Lista de Proyectos</title>
-    <!-- Tailwind CSS desde CDN -->
+
     <script src="https://cdn.tailwindcss.com"></script>
-                <script>
-                    tailwind.config = {
-                        theme: {
-                            extend: {
-                                colors: {
-                                    // Paleta personalizada de Morado Oscuro (Nori-iro / Shion)
-                                    'deep-purple': {
-                                        50: '#f5f3ff', // Fondo muy claro
-                                        100: '#ede9fe',
-                                        200: '#ddd6fe',
-                                        300: '#c4b5fd',
-                                        600: '#7c3aed', // Acento
-                                        700: '#6d28d9', // Texto secundario
-                                        800: '#5b21b6',
-                                        900: '#4c1d95', // Texto principal y bordes fuertes
-                                        950: '#1e1b4b', // Fondo ultra oscuro opcional
-                                    },
-                                },
-                                fontFamily: {
-                                    'jp-serif': ['Noto Serif JP', 'serif'],
-                                    'sans-refined': ['Plus Jakarta Sans', 'sans-serif'],
-                                },
-                            }
-                        }
-                    }
-                </script>
-                <style>
-                    /* Importación de fuentes */
-                    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap');
 
-                    body {
-                        font-family: 'Plus Jakarta Sans', sans-serif;
-                    }
-                </style>
-            </head>
-            <!-- Fondo muy sutil (deep-purple-50) para resaltar las tarjetas blancas -->
-            <body class="bg-deep-purple-50 text-gray-800 antialiased min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-purple': {
+                            950: '#0b0614',
+                            900: '#140c24',
+                            800: '#23153c',
+                            700: '#3a2063',
+                            500: '#8b5cf6',
+                            300: '#c4b5fd',
+                            100: '#ede9fe',
+                        },
+                    },
+                    fontFamily: {
+                        'jp-serif': ['Noto Serif JP', 'serif'],
+                        'sans-refined': ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
 
-                <main class="max-w-3xl mx-auto">
-                    <!-- Encabezado con toque japonés y morado oscuro -->
-                    <header class="mb-10 pb-6 border-b border-deep-purple-200 flex justify-between items-end">
-                        <div>
-                            <span class="text-xs tracking-widest uppercase text-deep-purple-700 font-medium block mb-1">
-                                プロジェクト — Project Management
-                            </span>
-                            <!-- Título en Serif Japonés y Morado 900 -->
-                            <h1 class="text-3xl font-jp-serif font-light tracking-wide text-deep-purple-900">
-                                Proyectos
-                            </h1>
-                        </div>
-                        <div class="text-right">
-                            <!-- Contador con fondo morado pálido pero texto oscuro -->
-                            <span class="text-xs font-jp-serif text-deep-purple-900 bg-deep-purple-100 px-3 py-1 rounded-full border border-deep-purple-200">
-                                全 {{ proyectos|length }} 件
-                            </span>
-                        </div>
-                    </header>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap');
 
-                    <!-- Lista de Proyectos -->
-                    <section aria-label="Lista de proyectos">
-                        {% if proyectos %}
-                            <ul class="space-y-4">
-                                {% for proyecto in proyectos %}
-                                    <!-- Tarjeta con borde sutil morado -->
-                                    <li class="bg-white p-6 rounded-lg border border-deep-purple-100 shadow-sm transition-all duration-200 hover:border-deep-purple-300 hover:shadow-md">
-                                        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                                            
-                                            <!-- Información del Proyecto -->
-                                            <div class="space-y-2 flex-1">
-                                                <div class="flex items-center gap-3">
-                                                    <!-- Detalle decorativo vertical en morado fuerte -->
-                                                    <span class="w-1 h-4 bg-deep-purple-600 rounded-full inline-block"></span>
-                                                    <!-- Nombre en Serif y Morado 900 -->
-                                                    <h2 class="text-lg font-jp-serif font-medium text-deep-purple-900">
-                                                        {{ proyecto.nombre }}
-                                                    </h2>
-                                                    <!-- Duración -->
-                                                    <span class="text-xs font-normal text-deep-purple-800 bg-deep-purple-100 px-2.5 py-0.5 rounded-full border border-deep-purple-200">
-                                                        {{ proyecto.duracion }}
-                                                    </span>
-                                                </div>
-                                                <p class="text-sm text-gray-600 font-light leading-relaxed pl-4">
-                                                    {{ proyecto.descripcion }}
-                                                </p>
-                                            </div>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+</head>
 
-                                            <!-- Acciones minimalistas -->
-                                            <div class="flex items-center gap-2 shrink-0 pt-3 sm:pt-0 border-t sm:border-t-0 border-gray-100 pl-4 sm:pl-0">
-                                                <!-- Enlace Detalle: Texto Morado Oscuro -->
-                                                <a href="{%url 'ver_proyecto' proyecto.id%}" 
-                                                class="text-xs font-medium text-deep-purple-700 hover:text-white px-3 py-1.5 rounded transition-colors hover:bg-deep-purple-700 border border-transparent hover:border-deep-purple-800">
-                                                    詳細 (Ver)
-                                                </a>
-                                                <!-- Enlace Eliminar: Rojo sutil -->
-                                                <a href="{%url 'eliminar_proyecto' proyecto.id%}" 
-                                                onclick="return confirm('¿Esta seguro de eliminar el proyecto?')"
-                                                class="text-xs font-medium text-rose-600 hover:text-white px-3 py-1.5 rounded transition-colors hover:bg-rose-600 border border-transparent hover:border-rose-700">
-                                                    削除 (Eliminar)
-                                                </a>
-                                            </div>
+<body class="bg-dark-purple-950 text-dark-purple-100 antialiased min-h-screen py-12 px-4 sm:px-6 lg:px-8">
 
-                                        </div>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <!-- Estado vacío -->
-                            <div class="text-center py-16 bg-white rounded-lg border border-dashed border-deep-purple-200">
-                                <p class="text-deep-purple-800 text-sm font-jp-serif">無 — No hay proyectos registrados actualmente.</p>
+    <main class="max-w-3xl mx-auto">
+
+        <header class="mb-10 pb-6 border-b border-dark-purple-800 flex justify-between items-end">
+
+            <div>
+
+                <span class="text-xs tracking-widest uppercase text-dark-purple-300 font-medium block mb-1">
+                    プロジェクト — Project Management
+                </span>
+
+                <h1 class="text-3xl font-jp-serif font-light tracking-wide text-white">
+                    Proyectos
+                </h1>
+
+            </div>
+
+            <div class="text-right">
+
+                <span class="text-xs font-jp-serif text-dark-purple-300 bg-dark-purple-900 px-3 py-1 rounded-full border border-dark-purple-800">
+                    全 {{ proyectos|length }} 件
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <section aria-label="Lista de proyectos">
+
+            {% if proyectos %}
+
+                <ul class="space-y-4">
+
+                    {% for proyecto in proyectos %}
+
+                        <li class="bg-dark-purple-900/70 p-6 rounded-lg border border-dark-purple-800 shadow-sm transition-all duration-200 hover:border-dark-purple-500 hover:bg-dark-purple-900">
+
+                            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+
+                                <div class="space-y-2 flex-1">
+
+                                    <div class="flex items-center gap-3">
+
+                                        <span class="w-1 h-5 bg-dark-purple-500 rounded-full inline-block"></span>
+
+                                        <h2 class="text-lg font-jp-serif font-medium text-white">
+                                            {{ proyecto.nombre }}
+                                        </h2>
+
+                                        <span class="text-xs font-normal text-dark-purple-300 bg-dark-purple-800 px-2.5 py-0.5 rounded-full border border-dark-purple-700">
+                                            {{ proyecto.duracion }}
+                                        </span>
+
+                                    </div>
+
+                                    <p class="text-sm text-dark-purple-300/80 font-light leading-relaxed pl-4">
+                                        {{ proyecto.descripcion }}
+                                    </p>
+
+                                </div>
+
+
+                                <div class="flex items-center gap-2 shrink-0 pt-3 sm:pt-0 border-t sm:border-t-0 border-dark-purple-800 pl-4 sm:pl-0">
+
+                                    <a href="{%url 'ver_proyecto' proyecto.id%}"
+                                       class="text-xs font-medium text-dark-purple-300 hover:text-white px-3 py-1.5 rounded transition-colors hover:bg-dark-purple-800 border border-transparent hover:border-dark-purple-700">
+
+                                        詳細 (Ver)
+
+                                    </a>
+
+                                    <a href="{%url 'eliminar_proyecto' proyecto.id%}"
+                                       onclick="return confirm('¿Esta seguro de eliminar el proyecto?')"
+                                       class="text-xs font-medium text-rose-400 hover:text-rose-200 px-3 py-1.5 rounded transition-colors hover:bg-rose-950/50 border border-transparent hover:border-rose-900">
+
+                                        削除 (Eliminar)
+
+                                    </a>
+
+                                </div>
+
                             </div>
-                        {% endif %}
-                    </section>
 
-                    <!-- Pie de página sutil -->
-                    <footer class="mt-12 text-center text-xs text-deep-purple-600 font-light">
-                        <span>侘寂 — Simplicidad y armonía en la gestión.</span>
-                    </footer>
-                </main>
+                        </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            {% else %}
+
+                <div class="text-center py-16 bg-dark-purple-900/40 rounded-lg border border-dashed border-dark-purple-800">
+
+                    <p class="text-dark-purple-300 text-sm font-jp-serif">
+                        無 — No hay proyectos registrados actualmente.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <footer class="mt-12 text-center text-xs text-dark-purple-300/50 font-light">
+
+            <span>
+                侘寂 — Simplicidad y armonía en la gestión.
+            </span>
+
+        </footer>
+
+    </main>
 
 </body>
 </html>
