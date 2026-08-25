@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
 from django.http import HttpResponse
 from . models import Proyecto,Tarea
 def home(request):
@@ -86,10 +87,13 @@ def crear_tarea(request, proyecto_id):
 
     return render(request,'crear_tarea.html', datos)
 
+#lo siguiente es un decorador, le da indicaciones a lo que esta debajo de el, ya sea metodo u otra cosa
+
+@require_POST
 def avanzar_estado_tarea(request, id):
     tarea = get_object_or_404(Tarea, id=id)
 
-    if tarea.estado == 'PEDIENTE':
+    if tarea.estado == 'PENDIENTE':
         tarea.estado = 'EN_PROGRESO'
         tarea.save()
     elif tarea.estado == 'EN_PROGRESO':
@@ -97,3 +101,19 @@ def avanzar_estado_tarea(request, id):
         tarea.save()
     
     return redirect('ver_proyecto', id=tarea.proyecto.id)
+
+def avanzar_rapido(request,id):
+    tarea = get_object_or_404(Tarea, id=id)
+    
+    if tarea.estado != 'COMPLETADA':
+        tarea.estado = 'COMPLETADA'
+        tarea.save()
+    
+    return redirect('ver_proyecto', id=tarea.proyecto.id)
+
+@require_POST
+def eliminar_tarea(request,id):
+    tarea = get_object_or_404(Tarea,id=id)
+    id_proyecto = tarea.proyecto.id
+    tarea.delete()
+    return redirect('ver_proyecto',id=id_proyecto)
