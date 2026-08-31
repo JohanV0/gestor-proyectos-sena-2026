@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -24,8 +25,10 @@
 
             <!-- marca -->
             <div class="flex justify-center mb-8">
-                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-400 to-fuchsia-600 shadow-[0_0_35px_-5px_rgba(192,132,252,0.8)] flex items-center justify-center">
-                    <span class="text-white text-xl font-semibold">P</span>
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-400 to-fuchsia-600 shadow-[0_0_35px_-5px_rgba(192,132,252,0.8)] flex items-center justify-center">
+                    <span class="text-white text-xl font-semibold">
+                        <img src="{% static 'img/logo.png' %}" alt="">
+                    </span>
                 </div>
             </div>
 
