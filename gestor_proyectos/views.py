@@ -1,17 +1,23 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render , redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse
-from . models import Proyecto,Tarea
+from django.contrib.auth.decorators import login_required
+from .models import Proyecto, Tarea
+
+@login_required
 def home(request):
     return render(request, 'home.html')
 
+@login_required
 def acerda_de(request):
     return render(request,'acerca-de.html')
 
+@login_required
 def mostrar_proyectos(request):
     proyectos = Proyecto.objects.all()
     return render(request, 'proyectos.html', {'proyectos': proyectos})
 
+@login_required
 def nuevos_registros(request):
     Proyecto.objects.create(
         nombre="Aplicación Bancaria", 
@@ -20,10 +26,12 @@ def nuevos_registros(request):
     )
     return HttpResponse('registro guardado')
 
+@login_required
 def ver_proyecto(request,id):
     proyecto = Proyecto.objects.get(id=id)
     return render(request, 'detalle-proyecto.html', {'proyecto': proyecto})
 
+@login_required
 def nuevo_proyecto(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombre')
@@ -44,11 +52,13 @@ def nuevo_proyecto(request):
 
     return render(request, 'nuevo-proyecto.html')
 
+@login_required
 def eliminar_proyecto(request, id):
     proyecto = Proyecto.objects.get(id=id)
     proyecto.delete()
     return redirect('proyectos')
 
+@login_required
 def editar_proyecto(request,id):   
     proyecto = Proyecto.objects.get(id=id)
     if request.method == 'POST':
@@ -65,6 +75,7 @@ def editar_proyecto(request,id):
     
     return render(request,'editar-proyecto.html', {"proyecto":proyecto})
 
+@login_required
 def crear_tarea(request, proyecto_id):
     proyecto = get_object_or_404(Proyecto, id=proyecto_id)
 
