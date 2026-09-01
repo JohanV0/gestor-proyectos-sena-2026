@@ -8,7 +8,7 @@ def registro(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return request('home')
+            return render('home')
     else:
         form = UserCreationForm()
     return render(request,'registro.html', {'form': form})
